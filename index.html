@@ -4,51 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STM32 RC Car Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            background: linear-gradient(to right, #E6F7FF, #ffffff); /* Gradient background */
+            color: #333; /* Dark gray text color */
         }
 
         header {
             text-align: center;
             padding: 20px;
-            background-color: #333;
-            color: #fff;
+            background: linear-gradient(to right, #FFFFFF, #D3E1FF); /* Blue gradient header background */
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         section {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff; /* White section background color */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        section:hover {
+            transform: scale(1.02);
         }
 
         h1, h2 {
-            color: #333;
+            color: #000000; /* Black heading text color */
+            margin-bottom: 10px;
         }
 
         p {
-            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
         }
 
         img {
             max-width: 100%;
             height: auto;
             margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        img:hover {
+            transform: scale(1.05);
         }
 
         pre {
-            background-color: #f8f8f8;
-            padding: 10px;
+            background-color: #f2f2f2; /* Light gray code snippet background color */
+            color: #333; /* Dark gray code snippet text color */
+            padding: 15px;
             overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
         }
 
         a {
-            color: #007BFF;
+            color: #004080; /* Dark blue link color */
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #D3E1FF; /* Blue footer background color */
+            color: #000;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
@@ -61,24 +94,24 @@
     <section>
         <h2>Project Overview</h2>
         <p>
-            Briefly describe your STM32 RC car project, including its purpose, features, and any unique aspects. You can also mention the technologies and components used.
+            Welcome to the exciting world of my STM32 RC car project. In this innovative endeavor, we are pushing the boundaries of technology to create a cutting-edge remote-controlled car using the powerful STM32 microcontroller.
         </p>
 
         <h2>Progress Updates</h2>
         <p>
-            Provide updates on the progress of your project. Include information on the development stages, challenges faced, and solutions implemented.
+            Stay tuned for regular updates on the progress of our project. From initial design concepts to overcoming technical challenges, we are sharing our journey with the community. Your feedback and insights are always welcome.
         </p>
 
         <h2>Media Gallery</h2>
         <p>
-            Showcase images or videos of your RC car project in action. You can embed photos or link to videos from your preferred hosting platform.
+            Immerse yourself in the visual experience. Check out the gallery below for snapshots of our RC car project in action. For an even closer look, explore the embedded photos or follow the links to our hosted videos.
         </p>
         <img src="/STM32-RC-Car/images/transmitter_wiring.png" alt="Transmitter Wiring">
         <img src="/STM32-RC-Car/images/receiver_wiring.png" alt="Receiver Wiring">
 
         <h2>Code Snippets</h2>
         <p>
-            Share relevant code snippets or link to the GitHub repository where your STM32 code is hosted.
+            Dive into the heart of the project with our featured code snippets. Explore the intricacies of the STM32 code that powers our RC car. For a comprehensive view, visit our GitHub repository linked below.
         </p>
         <pre>
             <code>
@@ -88,8 +121,12 @@
 
         <h2>Conclusion</h2>
         <p>
-            Summarize your project, mention any future plans or improvements, and invite visitors to provide feedback or ask questions.
+            As we wrap up each phase of the project, we reflect on our achievements and look forward to what lies ahead. Join us on this journey, and feel free to reach out with your thoughts, suggestions, or questions.
         </p>
     </section>
+
+    <footer>
+        &copy; 2023 STM32 RC Car Project | Designed by Your Name
+    </footer>
 </body>
 </html>
