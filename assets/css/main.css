@@ -4861,7 +4861,7 @@ input, select, textarea {
 	}
 
 		.spotlight.style1 .content {
-			padding: 7rem 7rem 5rem 7rem ;
+			padding: 2rem 7rem 2rem 7rem ;
 			-moz-align-self: center;
 			-webkit-align-self: center;
 			-ms-align-self: center;
@@ -4874,8 +4874,8 @@ input, select, textarea {
 			-webkit-flex-shrink: 1;
 			-ms-flex-shrink: 1;
 			flex-shrink: 1;
-			width: 65%;
-			max-width: 64rem;
+			width: 70%;
+			max-width: 70rem;
 			margin: 0 auto;
 		}
 
@@ -4903,7 +4903,7 @@ input, select, textarea {
 				-ms-object-position: center;
 				object-position: center;
 				display: block;
-				position: absolute;
+				position: relative;
 				top: 0;
 				left: 0;
 				width: 100%;
