@@ -27,7 +27,7 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f4xx_hal.h"
+#include "stm32l4xx_hal.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -35,15 +35,33 @@ extern "C" {
 #include "FreeRTOS.h"
 #include "task.h"
 #include <stdio.h>
+#include <string.h>
 #include "queue.h"
+#include <stdlib.h>
 
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 
+extern TaskHandle_t ultrasonic_task_handle;
+
 extern SPI_HandleTypeDef hspi1;
-extern QueueHandle_t q_joystick_pos;
+extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim2;
+extern QueueHandle_t eventQueue;
+
+extern UART_HandleTypeDef huart2;
+
+typedef enum {
+	ULTRASONIC = (uint8_t)0x1,
+	JOYSTICK   = (uint8_t)0x2
+}EVENT_TYPE;
+
+typedef struct{
+	EVENT_TYPE eventType;
+	uint32_t data[5];	//either median or joystick reading
+}QUEUE_DATA;
 
 /* USER CODE END ET */
 
@@ -57,6 +75,8 @@ extern QueueHandle_t q_joystick_pos;
 
 /* USER CODE END EM */
 
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -64,36 +84,47 @@ void Error_Handler(void);
 
 void receive_task(void *param);
 void motor_task(void *param);
-
-extern uint8_t nRF24_LL_RW(uint8_t data);
-extern void nRF24_CE_L(void);
-extern void nRF24_CE_H(void);
-extern void nRF24_CSN_L(void);
-extern void nRF24_CSN_H(void);
+void ultrasonic_task(void *param);
 
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define B1_Pin GPIO_PIN_13
-#define B1_GPIO_Port GPIOC
-#define CE_Pin GPIO_PIN_0
-#define CE_GPIO_Port GPIOC
-#define CSN_Pin GPIO_PIN_1
-#define CSN_GPIO_Port GPIOC
-#define USART_TX_Pin GPIO_PIN_2
-#define USART_TX_GPIO_Port GPIOA
-#define USART_RX_Pin GPIO_PIN_3
-#define USART_RX_GPIO_Port GPIOA
+#define BackMotor_IN1_Pin GPIO_PIN_0
+#define BackMotor_IN1_GPIO_Port GPIOA
+#define BackMotor_IN2_Pin GPIO_PIN_1
+#define BackMotor_IN2_GPIO_Port GPIOA
+#define VCP_TX_Pin GPIO_PIN_2
+#define VCP_TX_GPIO_Port GPIOA
+#define CE_Pin GPIO_PIN_3
+#define CE_GPIO_Port GPIOA
+#define CSN_Pin GPIO_PIN_4
+#define CSN_GPIO_Port GPIOA
 #define IRQ_Pin GPIO_PIN_0
 #define IRQ_GPIO_Port GPIOB
-#define TMS_Pin GPIO_PIN_13
-#define TMS_GPIO_Port GPIOA
-#define TCK_Pin GPIO_PIN_14
-#define TCK_GPIO_Port GPIOA
-#define SWO_Pin GPIO_PIN_3
-#define SWO_GPIO_Port GPIOB
+#define Echo_Pin GPIO_PIN_1
+#define Echo_GPIO_Port GPIOB
+#define PWMA_Pin GPIO_PIN_8
+#define PWMA_GPIO_Port GPIOA
+#define PWMB_Pin GPIO_PIN_9
+#define PWMB_GPIO_Port GPIOA
+#define HeadLights_Pin GPIO_PIN_10
+#define HeadLights_GPIO_Port GPIOA
+#define FrontMotor_IN1_Pin GPIO_PIN_11
+#define FrontMotor_IN1_GPIO_Port GPIOA
+#define FrontMotor_IN2_Pin GPIO_PIN_12
+#define FrontMotor_IN2_GPIO_Port GPIOA
+#define SWDIO_Pin GPIO_PIN_13
+#define SWDIO_GPIO_Port GPIOA
+#define VCP_RX_Pin GPIO_PIN_15
+#define VCP_RX_GPIO_Port GPIOA
+#define LD3_Pin GPIO_PIN_3
+#define LD3_GPIO_Port GPIOB
+#define Trig_Pin GPIO_PIN_5
+#define Trig_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
+
+#define DEBUG_UART 0
 
 /* USER CODE END Private defines */
 
