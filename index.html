@@ -958,28 +958,74 @@ void throttle(uint32_t pwmY)
 							<p>Details.</p>
 							<div class="index align-left">
 						
-								<!-- RC Car Selection -->
-									<section>
-										<header>
-											<h3>RC Car Selection</h3>
-										</header>
-										<div class="content">
-											<p>Hello</p>
-
-										</div>
-									</section>
-									
 								<!-- Motor Driver Selection -->
 									<section>
 										<header>
 											<h3>Motor Driver Selection</h3>
 										</header>
 										<div class="content">
-											<p>Hello</p>
+											<p>The first issue I faced was that the motor seemed to pulse on and off whenever the direction
+												was switched quickly or trying to drive at a fast speed. The video below shows this behavior.
+												After trying the TB6612FNG (Output current: 1.2A average/3.2A peak), 
+												DRV8833(Output current: 1.2A average/2A peak), and MX1508 (Output current: 1.5A average/2.5A peak)
+												motor drivers with no success, I concluded that the current draw of the motors was just simply 
+												too high 
+												which caused the built in thermal shutdown circuit to activate. As a solution, I found the 
+												DROK L298 (Output current: 7A average/50A peak) motor driver which is seen throughout this 
+												project. It was much bulkier than the other motor drivers, but was able to handle the current
+												output of the motors with ease.</p>
+											<video width="285" height="500" controls>
+											  <source src="images/badMotorDriver.mp4" type="video/mp4">										 
+											Your browser does not support the video tag.
+											</video>
+										</div>
+									</section>
+									
+								<!-- RC Car Selection -->
+									<section>
+										<header>
+											<h3>RC Car Selection</h3>
+										</header>
+										<div class="content">
+											<p>After buying the cheapest RC car I could find on Amazon, I noticed that it used 3.7V batteries 
+											to power itself. Since I 
+											wanted to use 7.4V to power both the STM32 and motor driver, I realized that doubling the voltage 
+											would be a problem. After a bit of research, I found that using PWM at a 50% duty cylce would be 
+											equivalent to 3.7V as long as the switching frequency of the PWM is high enough to avoid the 
+											current saturating. This method worked, however the speed of the RC car was now limited to 50% 
+											which wasn't that ideal. I then attempted to replace the motors with ones that were rated at
+											a higher voltage. However, this process was a huge headache as the stock motors were basically
+											an exact fit and replacing them meant I had to shave down some plastic, and even then the new motors
+											didn't fit comfortably. The obvious solution then dawned on me - just use a different RC car that
+											already come with 7.4V batteries.</p>
 
 										</div>
 									</section>
-								
+									
+								<!-- NRF24L01 Problems-->
+									<section>
+										<header>
+											<h3>NRF24L01 Problems</h3>
+										</header>
+										<div class="content">
+											<p>Trying to get both transceivers to work together properly was also a process. Some things I found 
+												to work in my case is the following:</p>
+											<ul>
+												<li>As meantioned earlier, soldering a 10uF capacitor on the power lines for both modules</li>
+												<li>Setting the SPI baud rate to 1.25Mb/s</li>
+												<li>Setting the data rate to 250kbps for both modules</li>
+												<li>Setting the RF channel to 115 (2515MHz) for both modules</li>
+												<li>Setting the RF power of the module in transmit mode to -12dBm</li>
+												<li>Make sure the TX/RX adresses match</li>
+												<li>Make sure the address lengths are set correctly</li>
+												<li>Make sure the payload lengths match for both TX/RX</li>
+												<li>Adding a 100ms delay after transmitting</li>
+											</ul>
+											<p>Some of these may or may not be the same in everyone's scenario, so trial and error would be
+											the best approach.</p>
+										</div>
+									</section>
+									
 							</div>
 						</div>
 					</section>
