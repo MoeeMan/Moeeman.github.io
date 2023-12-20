@@ -33,28 +33,25 @@
 					<section class="wrapper style1 align-center" id="first">
 						<div class="inner">
 							<h2>Overview</h2>
-							<p>A couple of years ago, I began a to work on a fun RC car project using one of those basic Arduino kits 
+							<p>A couple of years back, I dived into a fun RC car project with a basic Arduino kit, one of those entry-level setups 
 								like the one below.</p>
 								<div class="image">
 									<img src="images/gallery/design/old_rc_car.png" alt="" />
 								</div>
-							<p>Looking back, I didn't really have much experience in most of what was involved in this project like
-								interrupt events, power supplies, motor drivers, and wireless communication. The first thing that was wrong
-								was the power supply and motor driver. To start out, I attempted to 
-								get the RC car to move in various directions to make sure the motors were working correctly. Here, I was using 4 AA 
-								batteries (6V) and a L298N motor driver, <i><b>to power 4 motors.</b></i> With the voltage drop of 2V in the 
-								L298N (even more at higher loads), running 4 motors on two channels of this motor driver barely caused the car to move. 
-								With this issue not solved, I decided to skip the bluetooth communication for the receiver/transmitter and convert 
-								this project into an obstacle avoidance robot. Now the car was able to avoid obstacles using an ultrasonic sensor, but
-								I did not implement any interrupts and instead used polling for the entirety of the code, which was fine in this scenario as
-								there was only one sensor that was polled. This is where my project ended.</p>
-								<p>Fast forward to the present, I decided to revisit this project and try to solve the issues I faced before to actaully create 
-								a viable RC car by introducing a transmitter/receiver. Having had experience with Cortex M4 processor, I decided to use a 
-								STM32 board instead of an Arduino. Since there were going to be many things going on at once, polling wouldn't suffice, so I 
-								decided to use RTOS instead. Moments before ordering another RC car kit to begin this project, I randomly stumbled upon a 
-								better approach. This approach involved using a cheap commercially bought RC car and modifying it so that it could be controlled 
-								with a custom built transmitter. This allows us to use the internal and external frame of the RC car for both appearance 
-								and functionality. Both of these ideas are given credit to Dejan at HowToMechatronics which include the 
+							<p>Looking back, I realized I had little experience with key aspects like interrupt events, power supplies, motor drivers, 
+								and wireless communication. The initial hurdle came with the power supply and motor driver. Attempting to get the RC car 
+								to move in various directions, I used 4 AA batteries (6V) and an L298N motor driver for four motors. However, due to a 
+								voltage drop in the L298N, especially at higher loads, running four motors on two channels barely got the car moving. 
+								Faced with this issue, I changed my initial approach by leaving Bluetooth communication aside and transforming the project 
+								into an obstacle avoidance robot using an ultrasonic sensor. Despite not implementing interrupts and relying solely on 
+								polling in the code, it worked fine since there was only one sensor to manage. And there, my project came to a halt.</p>
+							<p>Fast forward to today, I decided to revisit the project, aiming to overcome past issues and create a fully functional 
+								RC car with a transmitter and receiver. Opting for an STM32 board instead of Arduino, given my experience with the Cortex 
+								M4 processor, I recognized that with multiple concurrent tasks, polling wouldn't cut it. Hence, I switched to using 
+								RTOS to handle various tasks. Just as I was about to order another RC car kit to kickstart the new project, I stumbled upon 
+								a game-changing idea. This new approach involved modifying a commercially bought RC car to be controlled with a custom-built 
+								transmitter. This approach allowed me to use both the internal and external components of the RC car for appearance 
+								and functionality alike. Credit for these clever ideas goes to Dejan at HowToMechatronics, who shared insights into both the
 								<a href="https://howtomechatronics.com/projects/diy-arduino-rc-receiver/">RC car modification</a> and
 								<a href="https://howtomechatronics.com/projects/diy-arduino-rc-transmitter/">custom transmitter</a>.</p>						
 						</div>
@@ -81,15 +78,15 @@
 									<h3>NUCLEO-L432KC</h3>
 									<p>The microcontroller used with STM32CubeIDE.</p>
 									<p>Features: Arm 32-bit Cortex-M4 CPU, 32 kHz crystal oscillator for RTC, 256KB flash, 
-										64KB of SRAM,14x communication interfaces, and a 14-channel DMA controller.</p>
+										64KB of SRAM, 14x communication interfaces, and a 14-channel DMA controller.</p>
 								</section>
 								<section>
 									<div class="image">
 										<img src="images/gallery/receiver_components/motor_driver.png" alt="" />
 									</div>
 									<h3>DROK L298 Dual H Bridge DC Motor Driver</h3>
-									<p>Voltage range is DC 6.5V-27V, rated output current of each port is 7A, 160W total output power, 
-										PWM frequency range 0-10kHz, under voltage protection.</p>
+									<p>Voltage range is DC 6.5V-27V, 7A rated output current on each port, 160W total output power, 
+										PWM frequency range of 0-10kHz, and under voltage protection.</p>
 								</section>
 								<section>
 									<div class="image">
@@ -222,19 +219,17 @@
 					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
 						<div class="content">
 							<h2>Transmitter Circuit Diagram</h2>
-							<p>The brains of this project comes from the NUCLEO-L432KC microcontroller. This was mainly chosen based on its 
-								small size, having an on-board ST-LINK for easy debugging, and I wanted to work in the Cortex-M family 
-								of processors. A similar approach is to use an small Arduino board like the mini or micro. The power to Vin comes
-								from a 7.4V 1200mAh Li-ion battery that came with the RC car I purchased. Its connected to a slide switch to easily
-								turn the power on/off anytime. So the power for the RC Car
-								uses a higher capacity battery that was purchased externally (see below). The NRF24L01+PA+LNA module, 
-								joysticks, and the 
-								potentiometer are all connected to 3.3V. Be sure to connect the NRF24L01 module to 3.3V as it will be 
-								damaged if connected to 5V or Vin. As for the joysticks and potetiometer, I chose 3.3V as it gave me 
-								much better analog readings than 5V. The toggle switch is also connected to 5V. The left joystick is stricly used
-								to throttle forward or backward so it is only connected on its VRy pin. The right joystick is for turning so
-								VRx is only connected. There is a 10uF decoupling capacitor across the power lines of the NRF24L01 module 
-								which makes the reliability much better.</p>
+							<p>At the heart of this project is the NUCLEO-L432KC microcontroller, chosen for its small size, built-in ST-LINK for easy 
+							debugging, and compatibility with the Cortex-M family of processors. Alternatively, a compact Arduino board like the mini or 
+							micro could be used. Powering up from a 7.4V 1200mAh Li-ion battery that came with the RC car, a handy slide switch controls 
+							the power, allowing for easy on/off toggling. Since the stock battery is now used for the transmitter, the RC car's main power 
+							now relies on an externally bought higher-capacity battery.</p>
+							<p>The NRF24L01+PA+LNA module, joysticks, and potentiometer are all connected to a 3.3V power 
+							source. It's crucial to connect the NRF24L01 module specifically to 3.3V to avoid damage. Opting for 3.3V for the joysticks 
+							and potentiometer yields better analog readings compared to 5V. The toggle switch is connected to 5V.</p>
+							<p>In terms of functionality, the left joystick exclusively handles forward or backward throttle through its VRy pin, while 
+							the right joystick, responsible for turning, interfaces only with VRx. To enhance the NRF24L01 module's reliability, a 10uF 
+							decoupling capacitor is placed across its power lines, contributing to overall reliability.</p>
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/transmitter_circuit.png" alt="" />
@@ -245,14 +240,15 @@
 					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
 						<div class="content">
 							<h2>Receiver Circuit Diagram</h2>
-							<p>The NUCLEO-L432KC is again used on the receiver side. As described above, the power for the RC car comes from
-								a seperate 7.4V 2000mAh Li-ion battery which increases the runtime signficantly compared to the stock 
-								1200mAh battery. Here, the NRF24L01+ module is used (without PA+LNA) which is again connected to 3.3V and 
-								includes another decoupling capacitor. The HC-SR04 module is connected to 5V. The motor wires are now desoldered off 
-								the old motor driver and
-								connected to the new DC motor driver. Motor 1 interfaces with ENA1, IN1, and IN2, while motor 2 interfaces
-								through	ENA2, IN3, and IN4. These pins correspond to PWM and I/O for each motor. Also, the power for the 
-								motor driver is coming from the same 7.4V battery used to power the microcontroller.</p>
+							<p>Once again, the NUCLEO-L432KC finds its place on the receiver side. As described earlier, the power source 
+								for the RC car comes from a 7.4V 2000mAh Li-ion battery, a significant upgrade from the stock 1200mAh battery, improving the 
+								overall runtime. The NRF24L01+ module (without PA+LNA) is connected to 3.3V, featuring another 
+								decoupling capacitor similar to the transmitter. The HC-SR04 module operates on 5V. The motor wires are desoldered from the old 
+								motor driver and connected to the new DC motor driver.</p> 
+								<p>For Motor 1, the interface involves ENA1, IN1, and IN2, 
+								while Motor 2 interfaces through ENA2, IN3, and IN4. Each set of pins correspond to PWM and I/O functions for its 
+								respective motor. Additionally, the power supply for the motor driver is drawn from the same 7.4V battery powering the 
+								microcontroller.</p>
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/receiver_circuit.png" alt="" />
@@ -264,7 +260,8 @@
 						<div class="content">
 							<h2>Transmitter PCB Design</h2>
 							<p>Here are the <a href="https://easyeda.com/editor#id=64a497a655c648d0b4b0406a234e0c97|bf4c7d610f5e4f019f44b5b8cc17287b">project files</a> 
-								for the transmitter PCB which was ordered through JCLPCB. The shape of the PCB was designed based on modern controllers for comfort.</p>
+								for the transmitter PCB, and I had it ordered through JCLPCB. I shaped the PCB with modern controllers in mind, focusing on 
+								comfort during use.</p>
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/transmitter_pcb.png" alt="" />
@@ -276,8 +273,8 @@
 						<div class="content">
 							<h2>Receiver PCB Design</h2>
 							<p>Here are the <a href="https://easyeda.com/editor#id=ba25a94d2c4f42d08c662e365f6207d0|5ef33eac6a444b02bf72100dfc768694">project files</a>
-								for the receiver PCB which was ordered through JCLPCB. The thought was to make this as small as possible to fit in the RC car
-								enclosure.</p>
+								for the receiver PCB, nd I had it ordered through JCLPCB. The idea was to keep it as compact as possible, ensuring a snug 
+								fit inside the RC car enclosure.</p>
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/receiver_pcb.png" alt="" />
@@ -288,9 +285,10 @@
 					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
 						<div class="content">
 							<h2>Physical PCB's</h2>
-							<p>Both PCB's came back very clean with high quality. Using these PCB's elimates the need for many additional wires which would make
-								everything look extremely messy and can cause some unreliability due to wire noise. It was time to solder all of the components 
-								onto both PCB's (which was very satisfying) and then assemble the controller using the custom laser cut acrylic and M3 spacers.</p>
+							<p>The PCBs came back in excellent condition and of high quality. The use of these PCBs has 
+								the added benefit of eliminating the need for numerous extra wires, preventing a cluttered and unreliable setup prone to wire 
+								noise. The next step involved the satisfying process of soldering all the components onto both PCBs, followed by the assembly 
+								of the controller using precision-cut acrylic and M3 spacers for a sleek and well-organized final look.</p>
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/pcbs_real.png" alt="" />
@@ -302,7 +300,7 @@
 						<div class="content">
 							<h2>Custom Cut Acrylic</h2>
 							<p>The front and back covers for the transmitter PCB were created by laser cutting a 1/8in clear acrylic sheet in the shape of the PCB. 
-							Here are the <a href = "downloadable_files/LaserCutFiles.zip" download>DXF files</a> for the laser printer which can be downloaded. </p>	
+							Here are the <a href = "downloadable_files/LaserCutFiles.zip" download>DXF files</a> for the laser printer.</p>	
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/acrylic.png" alt="" />
@@ -313,11 +311,12 @@
 					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
 						<div class="content">
 							<h2>Assembled RC Car Transmitter </h2>
-							<p>The components were soldered onto the PCB and two spacers were used between the acrylic and the PCB - a 5mm spacer on the back,
-								and a 10mm spacer on the front. The back spacer is held with a nut while the front spacer is held with a screw. The battery is
-								attached to the back with velcro. The slide switch for the power is super glued on the top between the back acrylic and PCB. Tape
-								is also added under the switch for the glue to stick onto, as applying it directly to the acrlyic caused the switch to fall off
-								repeatedly.</p>
+							<p>I soldered the components onto the PCB and attached the acrylic onto the PCB using two spacers: 
+								a 5mm spacer at the back, secured with a nut, and a 10mm spacer at the front, held in place with a screw.  
+								The battery is neatly fastened at the back, thanks to some trusty velcro. Now, the slide switch that powers the RC car 
+								is super glued on the top, right between the back acrylic and the PCB. To make sure it stays put, I added a layer of tape
+								on top of the acrylic and under the switch before applying the glue. This trick worked like a charm, preventing the switch 
+								from constantly slipping off when directly glued to the acrylic.</p>
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/four.png" alt="" />
@@ -328,8 +327,9 @@
 					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
 						<div class="content">
 							<h2>Under the Hood</h2>
-							<p>Both the motor driver and recevier PCB were placed under the outside shell of the RC car as they didnt fit anywhere else and makes
-								debugging the microcontroller conveniently easy to do. The ultrasonic sensor is glued to some cardboard at the front of the car.</p>
+							<p>The motor driver and receiver PCB were tucked snugly under the outer shell of the RC car, as there wasn't really any other 
+								good spot for them. This made it super easy to troubleshoot the microcontroller when needed. Up at the front of the car, 
+								I used some glue to attach the ultrasonic sensor to a small piece of cardboard.</p>
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/five.png" alt="" />
@@ -340,8 +340,9 @@
 					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
 						<div class="content">
 							<h2>Looking Closer</h2>
-							<p>The wires for the power and both motors are passed through this hole into the two black terminals and green terminal of the motor driver. 
-								The black terminals are for the motors while the green one is for the power. Lets see exactly how the wires are getting to this section.</p>
+							<p>Through this opening, the wires for the power and both motors are fed into the motor driver's two black terminals 
+								as well as its green terminal. The green terminal is for power, and the black terminal is for the motors. Let's examine 
+								the precise path taken by the cables to reach this area.</p>
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/six.png" alt="" />
@@ -352,10 +353,11 @@
 					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
 						<div class="content">
 							<h2>Uncovering the Next Sections</h2>
-							<p>Unscrewing the plate uncovers the front motor and the old motor driver (not shown here). After desoldering the wires from the old
-								motor driver, they're connected to the new motor driver. The yellow circle shows the wires coming from the battery underneath the car.
-								The red circle has 4 wires going under another plate. Uncovering that shows a set of wires (the power) connected to the slide switch
-								and then another set of wires going to the back motor.</p>
+							<p>Let's dive in! After unscrewing the plate, the front motor and the old motor driver (not shown in the picture) are
+								revealed. After desoldering the wires from the old motor driver, I connected them to the new one. Check out the yellow 
+								circle; those are the wires coming from the battery tucked beneath the car. Now, focus on the red circle – four wires 
+								sneak under another plate. Lift it, and you'll uncover a set of wires connected to the slide switch (that's for power) and 
+								another set leading to the back motor.</p>
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/seven.png" alt="" />
@@ -366,7 +368,7 @@
 					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
 						<div class="content">
 							<h2>Securing the Receiver PCB</h2>
-							<p>The PCB is secured inside of the cage of the RC car shell which was an exact fit.</p>
+							<p>The PCB is secured inside of the protective cage of the RC car – a perfect fit!</p>
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/eight.png" alt="" />
@@ -377,8 +379,9 @@
 					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
 						<div class="content">
 							<h2>Securing the Motor Driver</h2>
-							<p>The motor driver is then secured behind the PCB which was also an exact fit, and the outside shell is secured back in place. The red circle shows part of the cage
-								that was cut to allow the Micro-B USB cable to pass through to the microcontrollers debugging port.</p>
+							<p>I placed the motor driver right behind the PCB, which also fit perfectly. After that, the top piece of the RC car went back 
+								into place. Notice the red circle? That's a part of the cage that I cut to create room for the Micro-B USB cable to reach 
+								the microcontroller's debug port.</p>
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/three.png" alt="" />
@@ -389,9 +392,9 @@
 					<section class="spotlight style1 orient-right content-align-left image-position-center onscroll-image-fade-in">
 						<div class="content">
 							<h2>A Look at the Bottom</h2>
-							<p>The new battery that was used to power the RC car instead of the stock battery didn't fit under the battery case. To solve this issue,
-								a piece of velcro was cut and stuck to the outer lining of the bottom of the car. The other side of the velcro is then used as the
-								outer case.</p>
+							<p>The new battery I used to power the RC car was a bit too large to fit under the battery case – it just bulged out slightly 
+								too much. So, here's the clever fix: I cut a piece of velcro into the shape of the bottom of the RC car and stuck it to 
+								the outer lining. Then, I used the other side of the velcro as a makeshift outer case. Problem solved!</p>
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/two.png" alt="" />
@@ -402,7 +405,8 @@
 					<section class="spotlight style1 orient-left content-align-left image-position-center onscroll-image-fade-in">
 						<div class="content">
 							<h2>The Final Design</h2>
-							<p>As seen, the RC car looks sleek and the new electrical components under the shell are hidden and do not stick out at all.</p>
+							<p>Take a look – the RC car maintains its original look from the outside, almost unchanged. And the new electrical components 
+								under the shell? They're neatly tucked away, not sticking out one bit. A stealthy upgrade!</p>
 						</div>
 						<div class="image">
 							<img src="images/gallery/design/one.png" alt="" />
@@ -421,9 +425,9 @@
 									<section>
 										<header>
 											<h3>transmitter main.c</h3>
-											<p>DMA is used to pipe the data between ADC and memory so that the CPU doesn't slow down and 
-												become overloaded. The three ADC values that we need is from the left joystick, right joystick,
-												and potentiometer. One task is created to transmit the data.</p>
+											<p>DMA is used to pipe the data between ADC and memory so that the CPU doesn't get bogged down and overwhelmed. 
+												The three ADC values that we need are from the left joystick, right joystick, and potentiometer. One task is 
+												created to transmit the data.</p>
 										</header>
 										
 										<div class="content">
@@ -491,10 +495,10 @@ while(1)
 									<section>
 										<header>
 											<h3>receiver main.c</h3>
-											<p>htim1 is used for the PWM generation while htim2 is used for the ultrasonic sensor.
+											<p>htim1 is used for the PWM generation, while htim2 is used for the ultrasonic sensor.
 												Three tasks are created: one to receive input from the transmitter, another to run the ultrasonic
 												sensor obastacle detecting code, and then the last to run the motor. The event queue is created
-												to receive events from either the transmitter or ultrasonic sensor, which is then used in the 
+												to receive events from either the transmitter or ultrasonic sensor, which are then used in the 
 												motor task.</p>
 										</header>
 										
@@ -528,7 +532,7 @@ vTaskStartScheduler();
 											<h3>receiver.c</h3>
 											<p>The NRF24L01 module is first initialized for receiving. The receiver continuously checks the 
 												FIFO for a payload from the transmitter. The data is saved to their respective variables and 
-												then packaged together as a "Joystick" event which is sent to the event queue.</p>
+												then packaged together as a "Joystick" event, which is sent to the event queue.</p>
 										</header>
 										
 										<div class="content">
@@ -578,10 +582,10 @@ while (1) {
 											<h3>ultrasonic.c</h3>
 											<p>The ultrasonic task sends out a high Trig pulse and starts the htim2 timer. It waits until
 												Echo goes low and then calculates the distance. Now instead of using this distance reading in
-												the obstacle detecting code, it is used in store_reading. The store_reading() algorithm takes 5
+												the obstacle detection code, it is used in store_reading. The store_reading() algorithm takes five
 												distance readings of the ultrasonic sensor and computes the median of those values. This is
 												done to prevent false readings and increase reliability. The algorithm used to sort these
-												values is a bitonic sort with 5 inputs. The median value is packaged as an "Ultrasonic" event
+												values is a bitonic sort with five inputs. The median value is packaged as an "Ultrasonic" event,
 												which is sent to the event queue.</p>
 										</header>
 										
@@ -674,17 +678,17 @@ void store_reading(uint16_t dist)
 									<section>
 										<header>
 											<h3>motor.c</h3>
-											<p>The motor task can recieve "Joystick" or "Ultrasonic" events and processes each one differently
+											<p>The motor task can receive "Joystick" or "Ultrasonic" events and process each one differently.
 												In a "Joystick" event, the values from the joystick and potentiometer (throttle control) are 
 												used together in throttleToPwm() to find the final pwm value that should be used to move left, 
 												right, forward, or
 												backward. When moving forward and backward, calcDelay() is used to prevent quick changes in
-												those directions which can cause damage to the motors and motor driver. In an "Ultrasonic"
+												those directions, which can cause damage to the motors and motor driver. In an "Ultrasonic"
 												event, the median distance value is used to choose whether to stop or continue forward
 												(if enable_ultrasonic is set from the toggle switch of the transmitter). calcStopDistance()
 												is used to calculate the stopping distance from an object based on how fast the car is moving. 
-												In other words, if the car is moving fast, the car stops much sooner than if it was moving slow. 
-												This algorithm is far from efficient as I used trial and error on different speeds. A better 
+												In other words, if the car is moving fast, it stops much sooner than if it were moving slowly. 
+												This algorithm is far from efficient, as I used trial and error at different speeds. A better 
 												approach is to use an accelerometer and gyroscope sensor.</p>
 										</header>
 										
@@ -960,16 +964,15 @@ void throttle(uint32_t pwmY)
 											<h3>Motor Driver Selection</h3>
 										</header>
 										<div class="content">
-											<p>The first issue I faced was that the motor seemed to pulse on and off whenever the direction
-												was switched quickly or trying to drive at a fast speed. The video below shows this behavior.
-												After trying the TB6612FNG (Output current: 1.2A average/3.2A peak), 
-												DRV8833(Output current: 1.2A average/2A peak), and MX1508 (Output current: 1.5A average/2.5A peak)
-												motor drivers with no success, I concluded that the current draw of the motors was just simply 
-												too high 
-												which caused the built in thermal shutdown circuit to activate. As a solution, I found the 
-												DROK L298 (Output current: 7A average/50A peak) motor driver which is seen throughout this 
-												project. It was much bulkier than the other motor drivers, but was able to handle the current
-												output of the motors with ease.</p>
+											<p>The initial problem I encountered was a pulsing effect in the motor when quickly changing 
+												directions or driving at a high speed. Check out the video below to see what I mean. I experimented 
+												with various motor drivers: the TB6612FNG, DRV8833, and MX1508, but none resolved the issue. After a bit 
+												of research, I realized the motors were drawing too much current, triggering the thermal shutdown 
+												circuit in the motor drivers.</p>
+											<p>Enter the DROK L298 motor driver. Although a bit bulkier, this powerhouse 
+												(Output current: 7A average/50A peak) effortlessly handled the current demands of the motors, putting an 
+												end to the pulsing problem. It became the unsung hero of this project, ensuring smooth motor operation 
+												without breaking a sweat.</p>
 											<video width="285" height="500" controls>
 											  <source src="videos/badMotorDriver.mp4" type="video/mp4">										 
 											Your browser does not support the video tag.
@@ -983,17 +986,16 @@ void throttle(uint32_t pwmY)
 											<h3>RC Car Selection</h3>
 										</header>
 										<div class="content">
-											<p>After buying the cheapest RC car I could find on Amazon, I noticed that it used 3.7V batteries 
-											to power itself. Since I 
-											wanted to use 7.4V to power both the STM32 and motor driver, I realized that doubling the voltage 
-											would be a problem. After a bit of research, I found that using PWM at a 50% duty cylce would be 
-											equivalent to 3.7V as long as the switching frequency of the PWM is high enough to avoid the 
-											current saturating. This method worked, however the speed of the RC car was now limited to 50% 
-											which wasn't that ideal. I then attempted to replace the motors with ones that were rated at
-											a higher voltage. However, this process was a huge headache as the stock motors were basically
-											an exact fit and replacing them meant I had to shave down some plastic, and even then the new motors
-											didn't fit comfortably. The obvious solution then dawned on me - just use a different RC car that
-											already come with 7.4V batteries.</p>
+											<p>So, I got the cheapest RC car on Amazon, only to realize that it ran on a 3.7V battery. I was set 
+												on using a 7.4V power supply for both the STM32 and motor driver. Here's the problem: doubling the voltage 
+												would certainly burn out the motors. After some digging around, I learned that using PWM at a 50% duty cycle 
+												could mimic a 3.7V power source, as long as the PWM switching frequency is high enough to prevent current 
+												saturation. This trick worked, but it capped the RC car's speed at 50%, not exactly ideal.</p>
+											<p>Next, I thought, "Why not replace the motors for ones rated at a higher voltage?" Well, that turned out to be 
+												a real headache. The stock motors were a perfect fit, and swapping them meant shaving down some plastic. 
+												Even then, the new motors didn't sit comfortably in their enclosures. Finally, the lightbulb moment hit me – 
+												why not just use a different RC car that already comes with a 7.4V battery? Sometimes, the simplest solution 
+												is the best one!</p>
 
 										</div>
 									</section>
@@ -1005,14 +1007,14 @@ void throttle(uint32_t pwmY)
 										</header>
 										<div class="content">
 											<p>Trying to get both transceivers to work together properly was also a process. Some things I found 
-												to work in my case is the following:</p>
+												to work in my case are the following:</p>
 											<ul>
-												<li>As meantioned earlier, soldering a 10uF capacitor on the power lines for both modules</li>
+												<li>As mentioned earlier, soldering a 10uF capacitor on the power lines for both modules</li>
 												<li>Setting the SPI baud rate to 1.25Mb/s</li>
 												<li>Setting the data rate to 250kbps for both modules</li>
 												<li>Setting the RF channel to 115 (2515MHz) for both modules</li>
 												<li>Setting the RF power of the module in transmit mode to -12dBm</li>
-												<li>Make sure the TX/RX adresses match</li>
+												<li>Make sure the TX/RX addresses match</li>
 												<li>Make sure the address lengths are set correctly</li>
 												<li>Make sure the payload lengths match for both TX/RX</li>
 												<li>Adding a 100ms delay after transmitting</li>
